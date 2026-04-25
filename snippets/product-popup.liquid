@@ -1,0 +1,253 @@
+{% comment %}
+  Product Popup Snippet
+  - Shows product details
+  - Variant selection
+  - Add to cart functionality
+{% endcomment %}
+
+<style>
+  /* Popup Overlay */
+  .product-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .product-popup-overlay.active {
+    display: flex;
+    opacity: 1;
+  }
+
+  /* Popup Container */
+  .product-popup {
+    background: white;
+    border-radius: 12px;
+    max-width: 900px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+  }
+
+  .product-popup-overlay.active .product-popup {
+    transform: scale(1);
+  }
+
+  /* Close Button */
+  .product-popup__close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: #f0f0f0;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #333;
+    transition: all 0.3s ease;
+    z-index: 10;
+  }
+
+  .product-popup__close:hover {
+    background: #667eea;
+    color: white;
+    transform: rotate(90deg);
+  }
+
+  /* Popup Content */
+  .product-popup__content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    padding: 40px;
+  }
+
+  .product-popup__image-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .product-popup__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .product-popup__details {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .product-popup__title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    margin: 0;
+  }
+
+  .product-popup__price {
+    font-size: 32px;
+    font-weight: 700;
+    color: #667eea;
+  }
+
+  .product-popup__description {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #666;
+  }
+
+  /* Variant Selection */
+  .product-popup__variants {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .variant-option {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .variant-option__label {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #333;
+  }
+
+  .variant-option__buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .variant-option__btn {
+    padding: 10px 20px;
+    border: 2px solid #ddd;
+    background: white;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+  }
+
+  .variant-option__btn:hover {
+    border-color: #667eea;
+  }
+
+  .variant-option__btn.active {
+    border-color: #667eea;
+    background: #667eea;
+    color: white;
+  }
+
+  .variant-option__btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* Add to Cart Button */
+  .product-popup__add-to-cart {
+    width: 100%;
+    padding: 18px;
+    background: #667eea;
+    color: white;
+    border: none;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .product-popup__add-to-cart:hover {
+    background: #5568d3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  }
+
+  .product-popup__add-to-cart:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* Loading State */
+  .product-popup__loading {
+    display: none;
+    text-align: center;
+    padding: 40px;
+  }
+
+  .product-popup__loading.active {
+    display: block;
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .product-popup__content {
+      grid-template-columns: 1fr;
+      gap: 30px;
+      padding: 30px 20px;
+    }
+
+    .product-popup__title {
+      font-size: 24px;
+    }
+
+    .product-popup__price {
+      font-size: 26px;
+    }
+
+    .product-popup__close {
+      top: 10px;
+      right: 10px;
+      width: 35px;
+      height: 35px;
+    }
+  }
+</style>
+
+<div class="product-popup-overlay" id="productPopup">
+  <div class="product-popup">
+    <button class="product-popup__close" id="closePopup" aria-label="Close popup">
+      &times;
+    </button>
+
+    <div class="product-popup__loading" id="popupLoading">
+      <p>Loading product...</p>
+    </div>
+
+    <div class="product-popup__content" id="popupContent" style="display: none;">
+      <!-- Content will be dynamically inserted here -->
+    </div>
+  </div>
+</div>

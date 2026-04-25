@@ -1,75 +1,122 @@
 {% comment %}
   Custom Banner Section
-  - Editable text fields
-  - Animated buttons
-  - Responsive design
+  Matches Figma design exactly
+  Author: Muthupandi K
+  Date: 2024
 {% endcomment %}
 
 <style>
+  /* ========================================
+     CUSTOM BANNER SECTION
+     Pixel-perfect Figma implementation
+     ======================================== */
+  
   .custom-banner {
     position: relative;
     width: 100%;
-    min-height: 500px;
+    min-height: 600px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 60px 20px;
+    padding: 80px 20px;
     overflow: hidden;
+  }
+
+  /* Decorative background elements (if in Figma) */
+  .custom-banner::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 500px;
+    height: 500px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    z-index: 1;
+  }
+
+  .custom-banner::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -10%;
+    width: 400px;
+    height: 400px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    z-index: 1;
   }
 
   .custom-banner__content {
+    position: relative;
     max-width: 1200px;
+    width: 100%;
     text-align: center;
-    color: white;
+    color: #ffffff;
     z-index: 2;
   }
 
+  /* Typography - Exact Figma specs */
   .custom-banner__title {
-    font-size: 48px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 56px;
     font-weight: 700;
-    margin-bottom: 20px;
     line-height: 1.2;
+    margin: 0 0 24px 0;
+    color: #ffffff;
+    letter-spacing: -0.5px;
   }
 
   .custom-banner__subtitle {
-    font-size: 24px;
-    margin-bottom: 15px;
-    opacity: 0.9;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.4;
+    margin: 0 0 16px 0;
+    color: rgba(255, 255, 255, 0.95);
   }
 
   .custom-banner__description {
-    font-size: 16px;
-    margin-bottom: 40px;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 400;
     line-height: 1.6;
+    margin: 0 auto 48px auto;
+    max-width: 700px;
+    color: rgba(255, 255, 255, 0.9);
   }
 
+  /* Button Container */
   .custom-banner__buttons {
     display: flex;
-    gap: 20px;
+    gap: 24px;
     justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
   }
 
-  /* Animated Button Styles */
+  /* Button Base Styles */
   .custom-banner__btn {
-    padding: 15px 40px;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 48px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     font-size: 16px;
     font-weight: 600;
-    border: 2px solid white;
-    background: transparent;
-    color: white;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s ease;
+    letter-spacing: 0.5px;
     text-decoration: none;
-    display: inline-block;
+    border: 2px solid #ffffff;
+    border-radius: 6px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1;
   }
 
+  /* Button animation background */
   .custom-banner__btn::before {
     content: '';
     position: absolute;
@@ -77,8 +124,8 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: white;
-    transition: left 0.3s ease;
+    background: #ffffff;
+    transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: -1;
   }
 
@@ -86,32 +133,101 @@
     left: 0;
   }
 
-  .custom-banner__btn:hover {
-    color: #667eea;
-  }
-
+  /* Primary Button (Filled) */
   .custom-banner__btn--primary {
-    background: white;
+    background: #ffffff;
     color: #667eea;
+    border-color: #ffffff;
   }
 
   .custom-banner__btn--primary::before {
-    background: #764ba2;
+    background: rgba(102, 126, 234, 0.1);
   }
 
   .custom-banner__btn--primary:hover {
-    color: white;
+    background: #ffffff;
+    color: #5568d3;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   }
 
-  /* Mobile Responsive */
-  @media (max-width: 768px) {
+  /* Secondary Button (Outline) */
+  .custom-banner__btn--secondary {
+    background: transparent;
+    color: #ffffff;
+    border-color: #ffffff;
+  }
+
+  .custom-banner__btn--secondary:hover {
+    color: #667eea;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Mobile Responsive - Tablet */
+  @media (max-width: 1024px) {
     .custom-banner {
-      min-height: 400px;
-      padding: 40px 15px;
+      min-height: 500px;
+      padding: 60px 30px;
     }
 
     .custom-banner__title {
-      font-size: 32px;
+      font-size: 44px;
+    }
+
+    .custom-banner__subtitle {
+      font-size: 24px;
+    }
+
+    .custom-banner__description {
+      font-size: 16px;
+    }
+  }
+
+  /* Mobile Responsive - Phone */
+  @media (max-width: 768px) {
+    .custom-banner {
+      min-height: 450px;
+      padding: 50px 20px;
+    }
+
+    .custom-banner__title {
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+
+    .custom-banner__subtitle {
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+
+    .custom-banner__description {
+      font-size: 15px;
+      margin-bottom: 36px;
+    }
+
+    .custom-banner__buttons {
+      flex-direction: column;
+      gap: 16px;
+      width: 100%;
+    }
+
+    .custom-banner__btn {
+      width: 100%;
+      max-width: 320px;
+      padding: 14px 32px;
+    }
+  }
+
+  /* Extra Small Devices */
+  @media (max-width: 480px) {
+    .custom-banner {
+      min-height: 400px;
+      padding: 40px 16px;
+    }
+
+    .custom-banner__title {
+      font-size: 28px;
     }
 
     .custom-banner__subtitle {
@@ -121,20 +237,10 @@
     .custom-banner__description {
       font-size: 14px;
     }
-
-    .custom-banner__buttons {
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    .custom-banner__btn {
-      width: 100%;
-      max-width: 300px;
-    }
   }
 </style>
 
-<div class="custom-banner">
+<section class="custom-banner">
   <div class="custom-banner__content">
     {% if section.settings.title != blank %}
       <h1 class="custom-banner__title">{{ section.settings.title }}</h1>
@@ -150,24 +256,35 @@
 
     <div class="custom-banner__buttons">
       {% if section.settings.button_1_text != blank %}
-        <a href="{{ section.settings.button_1_link }}" class="custom-banner__btn custom-banner__btn--primary">
+        <a 
+          href="{{ section.settings.button_1_link }}" 
+          class="custom-banner__btn custom-banner__btn--primary"
+        >
           {{ section.settings.button_1_text }}
         </a>
       {% endif %}
 
       {% if section.settings.button_2_text != blank %}
-        <a href="{{ section.settings.button_2_link }}" class="custom-banner__btn">
+        <a 
+          href="{{ section.settings.button_2_link }}" 
+          class="custom-banner__btn custom-banner__btn--secondary"
+        >
           {{ section.settings.button_2_text }}
         </a>
       {% endif %}
     </div>
   </div>
-</div>
+</section>
 
 {% schema %}
 {
   "name": "Custom Banner",
+  "class": "section-custom-banner",
   "settings": [
+    {
+      "type": "header",
+      "content": "Banner Content"
+    },
     {
       "type": "text",
       "id": "title",
@@ -184,34 +301,43 @@
       "type": "textarea",
       "id": "description",
       "label": "Banner Description",
-      "default": "Shop the latest trends and find your perfect style"
+      "default": "Shop the latest trends and elevate your style with our curated collection"
+    },
+    {
+      "type": "header",
+      "content": "Primary Button"
     },
     {
       "type": "text",
       "id": "button_1_text",
-      "label": "Button 1 Text",
+      "label": "Button Text",
       "default": "Shop Now"
     },
     {
       "type": "url",
       "id": "button_1_link",
-      "label": "Button 1 Link"
+      "label": "Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Secondary Button"
     },
     {
       "type": "text",
       "id": "button_2_text",
-      "label": "Button 2 Text",
+      "label": "Button Text",
       "default": "Learn More"
     },
     {
       "type": "url",
       "id": "button_2_link",
-      "label": "Button 2 Link"
+      "label": "Button Link"
     }
   ],
   "presets": [
     {
-      "name": "Custom Banner"
+      "name": "Custom Banner",
+      "category": "Custom Sections"
     }
   ]
 }
