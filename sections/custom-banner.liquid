@@ -1,0 +1,218 @@
+{% comment %}
+  Custom Banner Section
+  - Editable text fields
+  - Animated buttons
+  - Responsive design
+{% endcomment %}
+
+<style>
+  .custom-banner {
+    position: relative;
+    width: 100%;
+    min-height: 500px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    overflow: hidden;
+  }
+
+  .custom-banner__content {
+    max-width: 1200px;
+    text-align: center;
+    color: white;
+    z-index: 2;
+  }
+
+  .custom-banner__title {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+
+  .custom-banner__subtitle {
+    font-size: 24px;
+    margin-bottom: 15px;
+    opacity: 0.9;
+  }
+
+  .custom-banner__description {
+    font-size: 16px;
+    margin-bottom: 40px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+  }
+
+  .custom-banner__buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* Animated Button Styles */
+  .custom-banner__btn {
+    padding: 15px 40px;
+    font-size: 16px;
+    font-weight: 600;
+    border: 2px solid white;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .custom-banner__btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: white;
+    transition: left 0.3s ease;
+    z-index: -1;
+  }
+
+  .custom-banner__btn:hover::before {
+    left: 0;
+  }
+
+  .custom-banner__btn:hover {
+    color: #667eea;
+  }
+
+  .custom-banner__btn--primary {
+    background: white;
+    color: #667eea;
+  }
+
+  .custom-banner__btn--primary::before {
+    background: #764ba2;
+  }
+
+  .custom-banner__btn--primary:hover {
+    color: white;
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .custom-banner {
+      min-height: 400px;
+      padding: 40px 15px;
+    }
+
+    .custom-banner__title {
+      font-size: 32px;
+    }
+
+    .custom-banner__subtitle {
+      font-size: 18px;
+    }
+
+    .custom-banner__description {
+      font-size: 14px;
+    }
+
+    .custom-banner__buttons {
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .custom-banner__btn {
+      width: 100%;
+      max-width: 300px;
+    }
+  }
+</style>
+
+<div class="custom-banner">
+  <div class="custom-banner__content">
+    {% if section.settings.title != blank %}
+      <h1 class="custom-banner__title">{{ section.settings.title }}</h1>
+    {% endif %}
+
+    {% if section.settings.subtitle != blank %}
+      <h2 class="custom-banner__subtitle">{{ section.settings.subtitle }}</h2>
+    {% endif %}
+
+    {% if section.settings.description != blank %}
+      <p class="custom-banner__description">{{ section.settings.description }}</p>
+    {% endif %}
+
+    <div class="custom-banner__buttons">
+      {% if section.settings.button_1_text != blank %}
+        <a href="{{ section.settings.button_1_link }}" class="custom-banner__btn custom-banner__btn--primary">
+          {{ section.settings.button_1_text }}
+        </a>
+      {% endif %}
+
+      {% if section.settings.button_2_text != blank %}
+        <a href="{{ section.settings.button_2_link }}" class="custom-banner__btn">
+          {{ section.settings.button_2_text }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Custom Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Banner Title",
+      "default": "Welcome to Our Store"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Banner Subtitle",
+      "default": "Discover Amazing Products"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Banner Description",
+      "default": "Shop the latest trends and find your perfect style"
+    },
+    {
+      "type": "text",
+      "id": "button_1_text",
+      "label": "Button 1 Text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "button_1_link",
+      "label": "Button 1 Link"
+    },
+    {
+      "type": "text",
+      "id": "button_2_text",
+      "label": "Button 2 Text",
+      "default": "Learn More"
+    },
+    {
+      "type": "url",
+      "id": "button_2_link",
+      "label": "Button 2 Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Banner"
+    }
+  ]
+}
+{% endschema %}
